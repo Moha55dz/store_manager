@@ -1,1 +1,1 @@
-web: gunicorn store_manager.wsgi:application
+web: python manage.py migrate && gunicorn store_manager.wsgi:application
