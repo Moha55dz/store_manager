@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block title %}
+الرئيسية - لوحة التحكم
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-welcome">
+        <h1>
+            <i class="fas fa-chart-line"></i>
+            مرحباً بك في لوحة التحكم الرئيسية
+        </h1>
+        <p>أهلاً بك {{ request.user.username }}، نتمنى لك يوماً منتجاً!</p>
+    </div>
+
+    <!-- بطاقات  -->
+    <div class="stats-container">
+        
+        <!-- البطاقة الأولى: الخدمات الإلكترونية -->
+        <div class="stat-card" style="border-top: 8px solid #ff6b35; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+            <div class="card-icon">
+                <i class="fas fa-bolt" style="color: #ff6b35;"></i>
+            </div>
+            <div class="card-details">
+                <h4>الخدمات الإلكترونية</h4>
+                <span class="stat-card-value" style="color: #000000;">$ {{ total_electronic_services_price }}</span>
+            </div>
+        </div>
+
+        <!-- البطاقة الثانية: تتبع الطلبيات -->
+        <div class="stat-card" style="border-top: 8px solid #9b59b6; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+            <div class="card-icon">
+                <i class="fas fa-tasks" style="color: #9b59b6;"></i>
+            </div>
+            <div class="card-details">
+                <h4>تتبع الطلبيات</h4>
+                <span class="stat-card-value" style="color: #000000;">{{ completed_deliveries }} / {{ total_deliveries }}</span>
+                <p style="font-size: 12px; color: #7f8c8d; margin-top: 5px;">المُسَلّمة / الكلية</p>
+            </div>
+        </div>
+
+        <!-- البطاقة الثالثة: الأقسام -->
+        <div class="stat-card" style="border-top: 8px solid #3498db; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+            <div class="card-icon">
+                <i class="fas fa-calculator" style="color: #3498db;"></i>
+            </div>
+            <div class="card-details">
+                <h4>الأقساط</h4>
+                <span class="stat-card-value" style="color: #000000;">DA {{ total_remaining_installments }}</span>
+                <p style="font-size: 12px; color: #7f8c8d; margin-top: 5px;">المبلغ المتبقي</p>
+            </div>
+        </div>
+
+        <!-- البطاقة الخامسة: الخزينة -->
+        <div class="stat-card" style="border-top: 8px solid #f39c12; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+            <div class="card-icon">
+                <i class="fas fa-wallet" style="color: #f39c12;"></i>
+            </div>
+            <div class="card-details">
+                <h4>الخزينة</h4>
+                <span class="stat-card-value" style="color: #000000;">DA {{ total_treasury }}</span>
+            </div>
+        </div>
+
+        <!-- البطاقة السادسة: تتبع التوصيل -->
+        <div class="stat-card" style="border-top: 8px solid #16a085; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+            <div class="card-icon">
+                <i class="fas fa-truck" style="color: #16a085;"></i>
+            </div>
+            <div class="card-details">
+                <h4>تتبع التوصيل</h4>
+                <span class="stat-card-value" style="color: #000000;">DA {{ total_delivery_earnings }}</span>
+            </div>
+        </div>
+
+        <!-- البطاقة: الموردون -->
+        <div class="stat-card" style="border-top: 8px solid #1abc9c; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+            <div class="card-icon">
+                <i class="fas fa-industry" style="color: #1abc9c;"></i>
+            </div>
+            <div class="card-details">
+                <h4>الموردون</h4>
+                <span class="stat-card-value" style="color: #000000;">{{ suppliers_count }}</span>
+            </div>
+        </div>
+
+        <!-- البطاقة: ديون الزبائن -->
+        <div class="stat-card" style="border-top: 8px solid #c0392b; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+            <div class="card-icon">
+                <i class="fas fa-hand-holding-usd" style="color: #c0392b;"></i>
+            </div>
+            <div class="card-details">
+                <h4>ديون الزبائن</h4>
+                <span class="stat-card-value" style="color: #000000;">DA {{ total_customer_debts }}</span>
+            </div>
+        </div>
+
+        <!-- البطاقة: ديون الموردون -->
+        <div class="stat-card" style="border-top: 8px solid #7f8c8d; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+            <div class="card-icon">
+                <i class="fas fa-file-invoice-dollar" style="color: #7f8c8d;"></i>
+            </div>
+            <div class="card-details">
+                <h4>ديون الموردون</h4>
+                <span class="stat-card-value" style="color: #000000;">DA {{ total_supplier_debts }}</span>
+            </div>
+        </div>
+
+        <!-- البطاقة: المصاريف -->
+        <div class="stat-card" style="border-top: 8px solid #d35400; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+            <div class="card-icon">
+                <i class="fas fa-receipt" style="color: #d35400;"></i>
+            </div>
+            <div class="card-details">
+                <h4>المصاريف</h4>
+                <span class="stat-card-value" style="color: #000000;">DA {{ total_expenses }}</span>
+            </div>
+        </div>
+
+        <!-- البطاقة: الهواتف المشتراة -->
+        <div class="stat-card" style="border-top: 8px solid #2471a3; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+            <div class="card-icon">
+                <i class="fas fa-mobile-alt" style="color: #2471a3;"></i>
+            </div>
+            <div class="card-details">
+                <h4>الهواتف المشتراة</h4>
+                <span class="stat-card-value" style="color: #000000;">DA {{ total_spent_on_phones }}</span>
+            </div>
+        </div>
+
+        <!-- البطاقة: المبالغ المستعملة -->
+        <div class="stat-card" style="border-top: 8px solid #b7950b; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+            <div class="card-icon">
+                <i class="fas fa-coins" style="color: #b7950b;"></i>
+            </div>
+            <div class="card-details">
+                <h4>المبالغ المستعملة</h4>
+                <span class="stat-card-value" style="color: #000000;">DA {{ total_spent_on_phones }}</span>
+            </div>
+        </div>
+
+        <!-- البطاقة: الصيانة -->
+        <div class="stat-card" style="border-top: 8px solid #117a65; border-top-left-radius: 20px; border-top-right-radius: 20px;">
+            <div class="card-icon">
+                <i class="fas fa-tools" style="color: #117a65;"></i>
+            </div>
+            <div class="card-details">
+                <h4>الصيانة</h4>
+                <span class="stat-card-value" style="color: #000000;">{{ maintenance_status }}</span>
+                <p style="font-size: 12px; color: #7f8c8d; margin-top: 5px;">الأجهزة المُصلحة / الكلية</p>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

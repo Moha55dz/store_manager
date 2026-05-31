@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/login.css">
+    <title>تسجيل الدخول - R-Manager Pro</title>
+</head>
+<body>
+    <form class="container" method="post" action="">{% csrf_token %}
+        <div>
+            <h1 class="title">R-Manager Pro</h1>
+            <p>نظام ادارة الاعمال</p>
+            
+            {% if error_message %}
+                <div class="error-message">
+                    <strong>خطأ:</strong> {{ error_message }}
+                </div>
+            {% endif %}
+            
+            <br>
+            <div class="form-group">
+                <input type="text" name="username" id="username" required placeholder="اسم المستخدم">
+            </div>
+            
+            <div class="form-group">
+                <input type="password" name="password" id="password" required placeholder="كلمة المرور">
+            </div>
+            
+            <button type="submit">تسجيل الدخول</button>
+
+            <p>By Mohamed ABA</p>
+            
+        </div>
+    </form>
+</body>
+</html>

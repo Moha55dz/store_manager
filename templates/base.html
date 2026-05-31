@@ -1,0 +1,171 @@
+{% load static %}
+{% load auth_extras %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}لوحة التحكم - مدير المتجر{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar - الشريط الجانبي -->
+        <aside class="sidebar">
+            <!-- Header - رأس الـ Sidebar -->
+            <div class="sidebar-header">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-details">
+                        <p class="user-role">مدير</p>
+                        <p class="user-name">{{ request.user.username }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu - قائمة الأقسام -->
+            <nav class="sidebar-menu">
+                <ul class="menu-list">
+                    <li class="menu-item">
+                        <a href="{% url 'dashboard_home' %}" class="menu-link">
+                            <i class="fas fa-home"></i>
+                            <span>الرئيسية</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="fas fa-hard-hat"></i>
+                            <span>العمال</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="fas fa-industry"></i>
+                            <span>الموردون</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="fas fa-hand-holding-usd"></i>
+                            <span>ديون الزبائن</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <span>ديون الموردون</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="fas fa-receipt"></i>
+                            <span>المصاريف</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>الهواتف المشتراة</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="fas fa-coins"></i>
+                            <span>المبالغ المستعملة</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="fas fa-tools"></i>
+                            <span>الصيانة</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="fas fa-wrench"></i>
+                            <span>الصيانة الخارجية</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="fas fa-bolt"></i>
+                            <span>الخدمات الإلكترونية</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="fas fa-tasks"></i>
+                            <span>تتبع الطلبيات</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="fas fa-calculator"></i>
+                            <span>الأقساط</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="fas fa-money-bill"></i>
+                            <span>الرواتب</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="fas fa-wallet"></i>
+                            <span>الخزينة</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="fas fa-truck"></i>
+                            <span>تتبع التوصيل</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="fas fa-clock"></i>
+                            <span>الحضور والمغادرة</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="#" class="menu-link">
+                            <i class="fas fa-cog"></i>
+                            <span>الإعدادات</span>
+                        </a>
+                    </li>
+                    {% if request.user.is_superuser or request.user|has_group:"Admin" %}
+                    <li class="menu-item" style="border-right: 3px solid #e74c3c;">
+                        <a href="{% url 'manage_users' %}" class="menu-link" style="color: #ff8a80;">
+                            <i class="fas fa-users-cog"></i>
+                            <span>إدارة المستخدمين</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li class="menu-item menu-logout">
+                        <a href="/logout/" class="menu-link">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>تسجيل الخروج</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content - المحتوى الرئيسي -->
+        <main class="main-content">
+            {% block content %}
+                <!-- سيتم استبدال هذا المحتوى في الصفحات الفرعية -->
+            {% endblock %}
+        </main>
+    </div>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

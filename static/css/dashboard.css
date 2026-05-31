@@ -1,0 +1,385 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --sidebar-bg: #1e3a5f;
+    --sidebar-hover: #2d5a8c;
+    --sidebar-active: #3a7bc8;
+    --text-color: #333;
+    --light-bg: #f5f5f5;
+    --primary-color: #3a7bc8;
+}
+
+body {
+    font-family: 'Tajawal', sans-serif;
+    background-color: var(--light-bg);
+    color: var(--text-color);
+}
+
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--light-bg);
+}
+
+
+.sidebar {
+    width: 20%;
+    min-width: 280px;
+    background-color: var(--sidebar-bg);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    padding: 25px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, #1a2f4a 0%, #1e3a5f 100%);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.user-details {
+    flex: 1;
+}
+
+.user-role {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+}
+
+.user-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    word-break: break-word;
+}
+
+/* Sidebar Menu */
+.sidebar-menu {
+    flex: 1;
+    padding: 15px 0;
+    overflow-y: auto;
+}
+
+.menu-list {
+    list-style: none;
+}
+
+.menu-item {
+    margin: 5px 0;
+    transition: all 0.3s ease;
+}
+
+.menu-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+}
+
+.menu-link:hover {
+    background-color: var(--sidebar-hover);
+    color: white;
+    border-left-color: #3a7bc8;
+    padding-right: 15px;
+}
+
+.menu-link i {
+    font-size: 18px;
+    width: 25px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.menu-link span {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.menu-item.active .menu-link {
+    background-color: var(--sidebar-active);
+    color: white;
+    border-left-color: #ffffff;
+}
+
+.menu-logout .menu-link {
+    color: rgba(255, 255, 255, 0.7);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: auto;
+}
+
+.menu-logout .menu-link:hover {
+    background-color: #c23b22;
+    color: white;
+    border-left-color: #ff6b6b;
+}
+
+.main-content {
+    width: 80%;
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+    background-color: var(--light-bg);
+}
+
+.main-content h1 {
+    color: var(--text-color);
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.main-content h2 {
+    color: var(--text-color);
+    font-size: 22px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.sidebar::-webkit-scrollbar,
+.main-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.main-content::-webkit-scrollbar-track {
+    background: #f0f0f0;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.main-content::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
+@media (max-width: 1024px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-width: auto;
+        height: auto;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .main-content {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .sidebar-menu {
+        display: flex;
+        flex-wrap: wrap;
+        max-height: none;
+    }
+
+    .menu-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .menu-item {
+        margin: 0;
+    }
+
+    .menu-link {
+        flex-direction: column;
+        padding: 10px 12px;
+        gap: 5px;
+        text-align: center;
+    }
+
+    .menu-link span {
+        font-size: 12px;
+    }
+
+    .menu-link i {
+        width: 100%;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 15px;
+    }
+
+    .sidebar-header {
+        padding: 15px;
+    }
+
+    .user-details {
+        display: none;
+    }
+
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 24px;
+    }
+
+    .menu-link {
+        padding: 8px 10px;
+    }
+
+    .menu-link i {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-content h1 {
+        font-size: 22px;
+    }
+
+    .main-content h2 {
+        font-size: 18px;
+    }
+}
+
+
+@media (min-width: 481px) and (max-width: 600px) {
+    .sidebar {
+        min-width: 240px;
+    }
+
+    .main-content {
+        padding: 18px;
+    }
+
+    .main-content h1 {
+        font-size: 24px;
+    }
+
+    .main-content h2 {
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 25%;
+        min-width: 200px;
+        height: 100vh;
+    }
+
+    .main-content {
+        width: 75%;
+        padding: 22px;
+    }
+
+    .sidebar-menu {
+        flex-direction: column;
+    }
+
+    .menu-list {
+        flex-direction: column;
+    }
+
+    .menu-link {
+        flex-direction: row;
+        padding: 12px 15px;
+    }
+
+    .menu-link span {
+        font-size: 13px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .dashboard-container {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 22%;
+        height: 100vh;
+    }
+
+    .main-content {
+        width: 78%;
+        padding: 25px;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+    .sidebar {
+        width: 20%;
+    }
+
+    .main-content {
+        width: 80%;
+        padding: 28px;
+    }
+}
+
+@media (min-width: 1441px) {
+    .sidebar {
+        width: 18%;
+        min-width: 300px;
+    }
+
+    .main-content {
+        width: 82%;
+        padding: 35px;
+    }
+}
