@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div dir="rtl" style="padding: 20px;">
+    <h2>🛠️ تتبع عمليات الصيانة</h2>
+    <a href="{% url 'add_maintenance' %}" style="background: green; color: white; padding: 10px; text-decoration: none; border-radius: 5px; display: inline-block; margin-bottom: 20px;">إضافة جهاز جديد</a>
+    
+    <table border="1" style="width: 100%; border-collapse: collapse; text-align: center; background: white; border: 1px solid #e0e0e0;">
+        <tr style="background: #f7f9fc;">
+            <th style="padding: 10px; border: 1px solid #e0e0e0;">اسم الزبون</th>
+            <th style="padding: 10px; border: 1px solid #e0e0e0;">الجهاز والمشكلة</th>
+            <th style="padding: 10px; border: 1px solid #e0e0e0;">التكلفة</th>
+            <th style="padding: 10px; border: 1px solid #e0e0e0;">الحالة</th>
+            <th style="padding: 10px; border: 1px solid #e0e0e0;">إجراءات</th>
+        </tr>
+        {% for task in tasks %}
+        <tr>
+            <td style="padding: 10px; border: 1px solid #e0e0e0;">{{ task.customer_name }}</td>
+            <td style="padding: 10px; border: 1px solid #e0e0e0;">{{ task.device_info }}</td>
+            <td style="padding: 10px; border: 1px solid #e0e0e0;">{{ task.cost }} DA</td>
+            <td style="padding: 10px; border: 1px solid #e0e0e0;">{{ task.get_status_display }}</td>
+            <td style="padding: 10px; border: 1px solid #e0e0e0;">
+                <a href="{% url 'edit_maintenance' task.id %}" style="color: blue; text-decoration: none;">تعديل الحالة ✏️</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" style="padding: 20px;">لا توجد عمليات صيانة حالياً.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

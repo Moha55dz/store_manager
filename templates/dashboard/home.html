@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load auth_extras %}
 
-{% block title %}
-الرئيسية - لوحة التحكم
+{% block title %}الرئيسية - لوحة التحكم{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -16,6 +20,7 @@
     <!-- بطاقات  -->
     <div class="stats-container">
         
+        {% if request.user.is_superuser or request.user|has_group:"Admin" %}
         <!-- البطاقة الأولى: الخدمات الإلكترونية -->
         <div class="stat-card" style="border-top: 8px solid #ff6b35; border-top-left-radius: 20px; border-top-right-radius: 20px;">
             <div class="card-icon">
@@ -26,6 +31,7 @@
                 <span class="stat-card-value" style="color: #000000;">$ {{ total_electronic_services_price }}</span>
             </div>
         </div>
+        {% endif %}
 
         <!-- البطاقة الثانية: تتبع الطلبيات -->
         <div class="stat-card" style="border-top: 8px solid #9b59b6; border-top-left-radius: 20px; border-top-right-radius: 20px;">
@@ -51,6 +57,7 @@
             </div>
         </div>
 
+        {% if request.user.is_superuser or request.user|has_group:"Admin" %}
         <!-- البطاقة الخامسة: الخزينة -->
         <div class="stat-card" style="border-top: 8px solid #f39c12; border-top-left-radius: 20px; border-top-right-radius: 20px;">
             <div class="card-icon">
@@ -61,6 +68,7 @@
                 <span class="stat-card-value" style="color: #000000;">DA {{ total_treasury }}</span>
             </div>
         </div>
+        {% endif %}
 
         <!-- البطاقة السادسة: تتبع التوصيل -->
         <div class="stat-card" style="border-top: 8px solid #16a085; border-top-left-radius: 20px; border-top-right-radius: 20px;">
@@ -73,6 +81,7 @@
             </div>
         </div>
 
+        {% if request.user.is_superuser or request.user|has_group:"Admin" %}
         <!-- البطاقة: الموردون -->
         <div class="stat-card" style="border-top: 8px solid #1abc9c; border-top-left-radius: 20px; border-top-right-radius: 20px;">
             <div class="card-icon">
@@ -138,6 +147,7 @@
                 <span class="stat-card-value" style="color: #000000;">DA {{ total_spent_on_phones }}</span>
             </div>
         </div>
+        {% endif %}
 
         <!-- البطاقة: الصيانة -->
         <div class="stat-card" style="border-top: 8px solid #117a65; border-top-left-radius: 20px; border-top-right-radius: 20px;">

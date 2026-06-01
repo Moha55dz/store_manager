@@ -426,6 +426,7 @@
                     <th>الرتبة</th>
                     <th>حالة الحساب</th>
                     <th>تاريخ الإنشاء</th>
+                    <th>إجراءات</th>
                 </tr>
             </thead>
             <tbody>
@@ -455,6 +456,16 @@
                         {% endif %}
                     </td>
                     <td data-label="تاريخ الإنشاء">{{ u.date_joined|date:"Y/m/d" }}</td>
+                    <td data-label="إجراءات">
+                        {% if u != request.user and not u.is_superuser %}
+                        <form action="{% url 'delete_user' u.id %}" method="POST" style="display:inline;" onsubmit="return confirm('هل أنت متأكد من حذف هذا المستخدم؟');">
+                            {% csrf_token %}
+                            <button type="submit" style="background:none; border:none; color:#c0392b; cursor:pointer; font-size: 16px;" title="حذف">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+                        {% endif %}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
