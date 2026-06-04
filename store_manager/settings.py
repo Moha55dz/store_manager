@@ -26,19 +26,26 @@ SECRET_KEY = 'django-insecure-0!j9$6#42#kqr29p(n0c_$d=0l3995m^1kzib+pe_eug40tv&h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [  # نطاق المشروع على Railway
-    'localhost',                   # للتطوير المحلي
-    '127.0.0.1',                   # للتطوير المحلي
-]
 
-# قراءة النطاق الديناميكي من متغيرات بيئة Railway
+
+# --- أولاً: إعداد ALLOWED_HOSTS (الذي قمت بضبطه سابقاً وهو صحيح) ---
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 RAILWAY_URL = os.environ.get('RAILWAY_STATIC_URL')
 
 if RAILWAY_URL:
     ALLOWED_HOSTS.append(RAILWAY_URL)
 else:
-    # احتياطياً في حال لم يُقرأ المتغير تلقائياً
     ALLOWED_HOSTS.append('rmanagerpro2.up.railway.app')
+
+
+# --- ثانياً: إعداد CSRF_TRUSTED_ORIGINS (هذا هو الجزء الناقص الذي يسبب الخطأ الحالي) ---
+CSRF_TRUSTED_ORIGINS = [
+    'https://rmanagerpro2.up.railway.app',
+]
+
+# إضافة الرابط الديناميكي احتياطياً لو كان متوفراً
+if RAILWAY_URL:
+    CSRF_TRUSTED_ORIGINS.append(f"https://{RAILWAY_URL}")
 
 # Application definition
 
