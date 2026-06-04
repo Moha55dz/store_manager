@@ -36,7 +36,6 @@ CSRF_TRUSTED_ORIGINS = [
     'https://rmanagerpro2.up.railway.app',
 ]
 
-
 # Application definition
 
 INSTALLED_APPS = [
