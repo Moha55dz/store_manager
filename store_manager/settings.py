@@ -26,11 +26,7 @@ SECRET_KEY = 'django-insecure-0!j9$6#42#kqr29p(n0c_$d=0l3995m^1kzib+pe_eug40tv&h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'rmanagerpro2.up.railway.app',
-    'localhost',
-    '127.0.0.1',
-]
+
 
 CSRF_TRUSTED_ORIGINS = [
     'https://rmanagerpro2.up.railway.app',
