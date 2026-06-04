@@ -26,13 +26,19 @@ SECRET_KEY = 'django-insecure-0!j9$6#42#kqr29p(n0c_$d=0l3995m^1kzib+pe_eug40tv&h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'rmanagerpro2.up.railway.app',  # نطاق المشروع على Railway
+ALLOWED_HOSTS = [  # نطاق المشروع على Railway
     'localhost',                   # للتطوير المحلي
     '127.0.0.1',                   # للتطوير المحلي
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://rmanagerpro2.up.railway.app']
+# قراءة النطاق الديناميكي من متغيرات بيئة Railway
+RAILWAY_URL = os.environ.get('RAILWAY_STATIC_URL')
+
+if RAILWAY_URL:
+    ALLOWED_HOSTS.append(RAILWAY_URL)
+else:
+    # احتياطياً في حال لم يُقرأ المتغير تلقائياً
+    ALLOWED_HOSTS.append('rmanagerpro2.up.railway.app')
 
 # Application definition
 
