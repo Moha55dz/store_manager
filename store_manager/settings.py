@@ -29,27 +29,16 @@ DEBUG = True
 
 
 # --- أولاً: إعداد ALLOWED_HOSTS (الذي قمت بضبطه سابقاً وهو صحيح) ---
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'rmanagerpro2.up.railway.app']
 RAILWAY_URL = os.environ.get('RAILWAY_STATIC_URL')
+
+CSRF_TRUSTED_ORIGINS = ['https://rmanagerpro2.up.railway.app']
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
 
-if RAILWAY_URL:
-    ALLOWED_HOSTS.append(RAILWAY_URL)
-else:
-    ALLOWED_HOSTS.append('rmanagerpro2.up.railway.app')
 
-
-# --- ثانياً: إعداد CSRF_TRUSTED_ORIGINS (هذا هو الجزء الناقص الذي يسبب الخطأ الحالي) ---
-CSRF_TRUSTED_ORIGINS = [
-    'https://rmanagerpro2.up.railway.app',
-]
-
-# إضافة الرابط الديناميكي احتياطياً لو كان متوفراً
-if RAILWAY_URL:
-    CSRF_TRUSTED_ORIGINS.append(f"https://{RAILWAY_URL}")
 
 # Application definition
 
