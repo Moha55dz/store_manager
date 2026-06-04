@@ -38,6 +38,8 @@ CSRF_TRUSTED_ORIGINS = [
     'https://*.up.railway.app' # هذا السطر سيثق في أي نطاق فرعي من ريلواي ويحل المشكلة قطعيًا
 ]
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
