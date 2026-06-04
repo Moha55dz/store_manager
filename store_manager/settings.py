@@ -28,9 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://rmanagerpro2.up.railway.app',
-]
+CSRF_TRUSTED_ORIGINS = ['*']
 
 # Application definition
 
