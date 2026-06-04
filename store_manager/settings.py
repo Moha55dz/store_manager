@@ -32,7 +32,11 @@ DEBUG = True
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'rmanagerpro2.up.railway.app']
 RAILWAY_URL = os.environ.get('RAILWAY_STATIC_URL')
 
-CSRF_TRUSTED_ORIGINS = ['https://rmanagerpro2.up.railway.app']
+CSRF_TRUSTED_ORIGINS = [
+    'https://rmanagerpro2.up.railway.app',
+    'https://*.custom', # احتياطي
+    'https://*.up.railway.app' # هذا السطر سيثق في أي نطاق فرعي من ريلواي ويحل المشكلة قطعيًا
+]
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
