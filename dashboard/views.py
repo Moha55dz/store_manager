@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.contrib import messages
 from django.db.models import Sum, Count
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 
 # استيراد النماذج (Models)
 from .models import (
@@ -152,6 +154,41 @@ def logout(request):
     """تسجيل الخروج"""
     auth_logout(request)
     return redirect('login')
+
+
+@login_required
+def settings_view(request):
+    """صفحة الإعدادات"""
+    password_form = PasswordChangeForm(request.user)
+    
+    if request.method == 'POST':
+        if 'update_profile' in request.POST:
+            username = request.POST.get('username')
+            
+            if username:
+                if User.objects.filter(username=username).exclude(id=request.user.id).exists():
+                    messages.error(request, "اسم المستخدم موجود مسبقاً!")
+                else:
+                    request.user.username = username
+                    request.user.save()
+                    messages.success(request, "تم تحديث البيانات بنجاح!")
+                    return redirect('settings')
+                    
+        elif 'change_password' in request.POST:
+            password_form = PasswordChangeForm(request.user, request.POST)
+            if password_form.is_valid():
+                user = password_form.save()
+                update_session_auth_hash(request, user)  # Important to keep user logged in
+                messages.success(request, "تم تغيير كلمة المرور بنجاح!")
+                return redirect('settings')
+            else:
+                for field, errors in password_form.errors.items():
+                    for error in errors:
+                        messages.error(request, error)
+
+    return render(request, 'dashboard/settings.html', {
+        'password_form': password_form
+    })
 
 
 @login_required
@@ -622,3 +659,88 @@ def edit_treasury(request, pk):
         'title': 'تعديل الخزينة',
         'cancel_url': reverse('treasury_list')
     })
+
+@login_required
+def used_amounts_list(request):
+    items = PurchasedPhone.objects.all()
+    total_spent = items.aggregate(total=Sum('purchase_price'))['total'] or 0
+    return render(request, 'dashboard/used_amounts_list.html', {'items': items, 'total_spent': total_spent})
+
+@login_required
+def external_maintenance_list(request):
+    tasks = MaintenanceTask.objects.filter(status='external').order_by('-created_at')
+    return render(request, 'dashboard/external_maintenance_list.html', {'tasks': tasks})
+
+@login_required
+def supplier_debts_list(request):
+    items = Supplier.objects.filter(debt__gt=0)
+    total_debt = items.aggregate(total=Sum('debt'))['total'] or 0
+    return render(request, 'dashboard/supplier_debts_list.html', {'items': items, 'total_debt': total_debt})
+
+
+
+@login_required
+def delete_customer(request, pk):
+    item = get_object_or_404(Customer, pk=pk)
+    item.delete()
+    return redirect(request.META.get('HTTP_REFERER', 'customer_list'))
+
+@login_required
+def delete_expense(request, pk):
+    item = get_object_or_404(Expense, pk=pk)
+    item.delete()
+    return redirect(request.META.get('HTTP_REFERER', 'expense_list'))
+
+@login_required
+def delete_employee(request, pk):
+    item = get_object_or_404(Employee, pk=pk)
+    item.delete()
+    return redirect(request.META.get('HTTP_REFERER', 'employee_list'))
+
+@login_required
+def delete_attendance(request, pk):
+    item = get_object_or_404(Attendance, pk=pk)
+    item.delete()
+    return redirect(request.META.get('HTTP_REFERER', 'attendance_list'))
+
+@login_required
+def delete_supplier(request, pk):
+    item = get_object_or_404(Supplier, pk=pk)
+    item.delete()
+    return redirect(request.META.get('HTTP_REFERER', 'supplier_list'))
+
+@login_required
+def delete_purchased_phone(request, pk):
+    item = get_object_or_404(PurchasedPhone, pk=pk)
+    item.delete()
+    return redirect(request.META.get('HTTP_REFERER', 'purchased_phone_list'))
+
+@login_required
+def delete_electronic_service(request, pk):
+    item = get_object_or_404(ElectronicService, pk=pk)
+    item.delete()
+    return redirect(request.META.get('HTTP_REFERER', 'electronic_service_list'))
+
+@login_required
+def delete_installment(request, pk):
+    item = get_object_or_404(Installment, pk=pk)
+    item.delete()
+    return redirect(request.META.get('HTTP_REFERER', 'installment_list'))
+
+@login_required
+def delete_delivery_tracker(request, pk):
+    item = get_object_or_404(DeliveryTracker, pk=pk)
+    item.delete()
+    return redirect(request.META.get('HTTP_REFERER', 'delivery_tracker_list'))
+
+@login_required
+def delete_treasury(request, pk):
+    item = get_object_or_404(Treasury, pk=pk)
+    item.delete()
+    return redirect(request.META.get('HTTP_REFERER', 'treasury_list'))
+
+@login_required
+def delete_maintenance(request, pk):
+    item = get_object_or_404(MaintenanceTask, pk=pk)
+    item.delete()
+    return redirect(request.META.get('HTTP_REFERER', 'maintenance_list'))

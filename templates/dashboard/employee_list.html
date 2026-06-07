@@ -22,6 +22,8 @@
             <td style='padding: 10px; border: 1px solid #e0e0e0;'>{{ item.salary }}</td>
             <td style="padding: 10px; border: 1px solid #e0e0e0;">
                     <a href="{% url 'edit_employee' item.id %}" style="color: #f39c12; text-decoration: none; font-weight: bold;">تعديل ✏️</a>
+                    <span style="color: #ccc;">|</span>
+                    <a href="{% url 'delete_employee' item.id %}" style="color: #e74c3c; text-decoration: none; font-weight: bold; margin-right: 5px;" onclick="return confirm('هل أنت متأكد من الحذف؟ لا يمكن التراجع عن هذه العملية.')">حذف 🗑️</a>
                 </td>
             </tr>
             {% empty %}
