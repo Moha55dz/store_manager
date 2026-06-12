@@ -13,6 +13,17 @@ class ExpenseForm(forms.ModelForm):
     class Meta:
         model = Expense
         fields = '__all__'
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'placeholder': 'عنوان المصروف',
+                'style': 'padding:10px 14px; border-radius:8px;'
+            }),
+            'amount': forms.NumberInput(attrs={
+                'step': '0.01',
+                'placeholder': 'المبلغ',
+                'style': 'padding:10px 14px; border-radius:8px; text-align:center;'
+            }),
+        }
 
 class EmployeeForm(forms.ModelForm):
     class Meta:
@@ -27,12 +38,18 @@ class AttendanceForm(forms.ModelForm):
 class SupplierForm(forms.ModelForm):
     class Meta:
         model = Supplier
-        fields = '__all__'
+        # Exclude the debt field here — it has its own section and will be added later
+        exclude = ('debt',)
 
 class PurchasedPhoneForm(forms.ModelForm):
     class Meta:
         model = PurchasedPhone
         fields = '__all__'
+        widgets = {
+            'purchase_price': forms.NumberInput(attrs={'step': '0.01'}),
+            'selling_price': forms.NumberInput(attrs={'step': '0.01'}),
+            'quantity': forms.NumberInput(attrs={'min': '1'}),
+        }
 
 class MaintenanceTaskForm(forms.ModelForm):
     class Meta:

@@ -42,6 +42,8 @@ class Supplier(models.Model):
     name = models.CharField(max_length=150, verbose_name="اسم المورد")
     phone = models.CharField(max_length=20, null=True, blank=True, verbose_name="رقم الهاتف")
     debt = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name="ديون المورد")
+    # نوع المنتجات المشتراة من هذا المورد
+    products_type = models.CharField(max_length=250, null=True, blank=True, verbose_name="نوع المنتجات المشتراة")
 
     def __str__(self):
         return self.name
@@ -52,11 +54,19 @@ class PurchasedPhone(models.Model):
     imei = models.CharField(max_length=50, unique=True, verbose_name="رقم التسلسل (IMEI)")
     purchase_price = models.DecimalField(max_digits=10, decimal_places=2, default=15000.00, null=True, blank=True, verbose_name="سعر الشراء")
     selling_price = models.DecimalField(max_digits=10, decimal_places=2, default=20000.00, null=True, blank=True, verbose_name="سعر البيع")
+    quantity = models.PositiveIntegerField(default=1, verbose_name="عدد الهواتف")
     date_purchased = models.DateField(auto_now_add=True, verbose_name="تاريخ الشراء")
     is_sold = models.BooleanField(default=False, verbose_name="تم البيع؟")
 
     def __str__(self):
         return self.model_name
+
+    @property
+    def total_purchase_cost(self):
+        try:
+            return self.purchase_price * self.quantity
+        except Exception:
+            return 0
 
 class MaintenanceTask(models.Model):
     STATUS_CHOICES = (

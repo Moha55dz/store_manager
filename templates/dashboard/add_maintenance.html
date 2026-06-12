@@ -26,9 +26,12 @@
                 <option value="external">صيانة خارجية</option>
             </select>
         </div>
-        <button type="submit" style="background: #3a7bc8; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; width: 100%;">
+        <button type="submit" style="background: #3a7bc8; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; width: 100%; margin-bottom: 10px;">
             حفظ البيانات
         </button>
+        <div style="text-align: center;">
+            <a href="{% url 'maintenance_list' %}" style="color: #7f8c8d; text-decoration: none; font-size: 14px;">الغاء والعودة</a>
+        </div>
     </form>
 </div>
 {% endblock %}

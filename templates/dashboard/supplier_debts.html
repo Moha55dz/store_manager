@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div dir="rtl" style="padding: 20px;">
+    <h2>📋 ديون الموردين</h2>
+    <div style="overflow-x: auto; margin-bottom: 12px;">
+        <div style="text-align: left; margin-bottom: 8px; color: #1e3a5f; font-weight: 700;">المجموع: DA {{ total_debt }}</div>
+    </div>
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: center; background: white; border: 1px solid #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+            <tr style="background: #f7f9fc; color: #1e3a5f;">
+                <th style='padding: 10px; border: 1px solid #e0e0e0;'>اسم المورد</th>
+                <th style='padding: 10px; border: 1px solid #e0e0e0;'>رقم الهاتف</th>
+                <th style='padding: 10px; border: 1px solid #e0e0e0;'>قيمة الدين</th>
+            </tr>
+            {% for item in items %}
+            <tr style="transition: background 0.2s;" onmouseover="this.style.background='#f1f5f9';" onmouseout="this.style.background='white';">
+                <td style='padding: 10px; border: 1px solid #e0e0e0;'>{{ item.name }}</td>
+                <td style='padding: 10px; border: 1px solid #e0e0e0;'>{{ item.phone }}</td>
+                <td style='padding: 10px; border: 1px solid #e0e0e0;'>
+                    <form method="POST" action="{% url 'update_supplier_debt' item.id %}" style="display:inline-flex; gap:8px; align-items:center; justify-content:center;">
+                        {% csrf_token %}
+                        <input type="number" step="0.01" name="debt" value="{{ item.debt }}" style="width:110px; padding:6px 8px; border-radius:6px; border:1px solid #ddd; text-align:center;" />
+                        <button type="submit" style="background: linear-gradient(135deg, #1e3a5f, #3a7bc8); color: white; border: none; padding: 6px 10px; border-radius:6px; cursor:pointer; font-size:13px;">حفظ</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" style="padding: 20px; color: #7f8c8d;">لا توجد بيانات حالياً.</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

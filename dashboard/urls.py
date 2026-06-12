@@ -34,6 +34,8 @@ urlpatterns = [
     path('supplier/add/', views.add_supplier, name='add_supplier'),
     path('supplier/edit/<int:pk>/', views.edit_supplier, name='edit_supplier'),
     path('supplier/delete/<int:pk>/', views.delete_supplier, name='delete_supplier'),
+    path('supplier/debts/', views.supplier_debts, name='supplier_debts'),
+    path('supplier/update-debt/<int:pk>/', views.update_supplier_debt, name='update_supplier_debt'),
     path('purchased-phone/', views.purchased_phone_list, name='purchased_phone_list'),
     path('purchased-phone/add/', views.add_purchased_phone, name='add_purchased_phone'),
     path('purchased-phone/edit/<int:pk>/', views.edit_purchased_phone, name='edit_purchased_phone'),
@@ -55,4 +57,6 @@ urlpatterns = [
     path('treasury/edit/<int:pk>/', views.edit_treasury, name='edit_treasury'),
     path('treasury/delete/<int:pk>/', views.delete_treasury, name='delete_treasury'),
     
+    # Consolidated spendings page
+    path('spendings/', views.spendings_list, name='spendings_list'),
 ]

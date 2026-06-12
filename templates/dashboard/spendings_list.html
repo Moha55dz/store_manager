@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div dir="rtl" style="padding:20px;">
+    <h2>📋 المصروفات الكلية</h2>
+    <div style="margin-bottom:12px;">
+        <a href="#" class="btn" style="background:#3a7bc8;color:white;padding:8px 12px;border-radius:6px;">تصدير CSV</a>
+    </div>
+
+    <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;text-align:center;background:white;border:1px solid #e0e0e0;">
+            <tr style="background:#f7f9fc;color:#1e3a5f;">
+                <th style="padding:10px;border:1px solid #e0e0e0;">النوع</th>
+                <th style="padding:10px;border:1px solid #e0e0e0;">مرجع</th>
+                <th style="padding:10px;border:1px solid #e0e0e0;">تاريخ</th>
+                <th style="padding:10px;border:1px solid #e0e0e0;">قيمة</th>
+                <th style="padding:10px;border:1px solid #e0e0e0;">ملاحظات</th>
+            </tr>
+            {% for e in entries %}
+            <tr>
+                <td style="padding:10px;border:1px solid #e0e0e0;">{{ e.type }}</td>
+                <td style="padding:10px;border:1px solid #e0e0e0;">{{ e.reference }}</td>
+                <td style="padding:10px;border:1px solid #e0e0e0;">{% if e.date %}{{ e.date }}{% else %}-{% endif %}</td>
+                <td style="padding:10px;border:1px solid #e0e0e0;">DA {{ e.amount|floatformat:2 }}</td>
+                <td style="padding:10px;border:1px solid #e0e0e0;">{{ e.note }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" style="padding:20px;color:#7f8c8d;">لا توجد بيانات حالياً.</td>
+            </tr>
+            {% endfor %}
+            <tr style="background:#f1f5f9;font-weight:700;">
+                <td colspan="3" style="padding:10px;border:1px solid #e0e0e0;text-align:right;">الإجمالي</td>
+                <td style="padding:10px;border:1px solid #e0e0e0;">DA {{ total_sum|floatformat:2 }}</td>
+                <td style="padding:10px;border:1px solid #e0e0e0;"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}
